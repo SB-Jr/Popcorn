@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Popcorn</string>
-    <string name="action_settings">Settings</string>
+    <string name="sort_order">Sort Order</string>
 </resources>
