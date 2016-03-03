@@ -38,7 +38,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    final private String apiKey=null;
+    final private String apiKey="----";
 
     GridView movieGrid = null;
     String movieJsonData=null;
@@ -171,9 +171,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            pBar.setVisibility(View.INVISIBLE);
-            pBar.invalidate();
-
             try {
                 List<Movie> newMovieList =new MovieListBuilder(movieJsonData).buildList();
                 for(Movie m:newMovieList){
@@ -192,7 +189,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Some error Occurred",Toast.LENGTH_LONG).show();
             }
             movieAdapter.notifyDataSetChanged();
+
+            pBar.setVisibility(View.INVISIBLE);
+            pBar.invalidate();
+
         }
+
     }
 
 

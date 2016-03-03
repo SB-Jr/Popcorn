@@ -1,6 +1,9 @@
 package com.udacity.sbjr.popcorn.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +15,7 @@ import com.squareup.picasso.Picasso;
 import com.udacity.sbjr.popcorn.POJO.Movie;
 import com.udacity.sbjr.popcorn.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by sbjr on 2/2/16.

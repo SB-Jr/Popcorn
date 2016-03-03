@@ -1,8 +1,14 @@
 package com.udacity.sbjr.popcorn.Activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,9 +36,34 @@ public class MovieDetail extends AppCompatActivity {
 
         title.setText(movie.getTitle());
         yor.setText("Release Date:"+movie.getReleaseDate());
-        rating.setText("Rating:"+movie.getRating());
-        synopsis.setText("Synopsis:"+movie.getSynopsis());
+        rating.setText("Rating:" + movie.getRating());
+        synopsis.setText("Synopsis:" + movie.getSynopsis());
+
+        getSupportActionBar().setTitle(movie.getTitle());
 
         Picasso.with(getApplicationContext()).load("http://image.tmdb.org/t/p/w342" + movie.getPosterPath()).into(poster);
+
+        Bitmap bitmap = ((BitmapDrawable) poster.getDrawable()).getBitmap();
+
+        Palette.PaletteAsyncListener paletteAsyncListener = new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                int primary=0xB0ABA0;
+                int darkprimary = 0x181712;
+                int maxColor = palette.getMutedColor(primary);
+                //int darkvibrant = palette.getDarkVibrantColor(darkprimary);
+
+                ColorDrawable cd= new ColorDrawable(maxColor);
+                getSupportActionBar().setBackgroundDrawable(cd);
+
+                Window window = getWindow();
+                window.setStatusBarColor(maxColor-0x0A0A0A);
+
+            }
+        };
+
+        Palette.from(bitmap).generate(paletteAsyncListener);
+
+
     }
 }
