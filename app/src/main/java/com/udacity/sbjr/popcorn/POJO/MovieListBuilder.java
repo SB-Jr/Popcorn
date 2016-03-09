@@ -20,12 +20,18 @@ public class MovieListBuilder {
     final String movieBackdropPath = "backdrop_path";
     final String movieVote = "vote_average";
     final String movieSynopsis = "overview";
+    final String movieId ="id";
 
     String json = null;
     public MovieListBuilder(String json){
         this.json = json;
     }
 
+
+
+    /*
+    * this method is used to create a list of movie objects by parsing the json and pass it to the calling function
+    * */
     public ArrayList<Movie> buildList() throws JSONException{
         ArrayList<Movie> list = new ArrayList<>();
 
@@ -44,7 +50,7 @@ public class MovieListBuilder {
             movieObj.setPosterPath(movieJsonObj.getString(moviePosterPath));
             movieObj.setRating(movieJsonObj.getString(movieVote));
             movieObj.setReleaseDate(movieJsonObj.getString(movieReleaseDate));
-
+            movieObj.setId(movieJsonObj.getString("id"));
 
             list.add(movieObj);
         }
@@ -52,5 +58,42 @@ public class MovieListBuilder {
         return list;
     }
 
+    /*
+    * this method is used to build a list of trailer urls and pass it to the calling function
+    * */
+    public ArrayList<String> buildTrailerList() throws JSONException{
+
+        ArrayList<String> list = new ArrayList<>();
+
+        JSONObject obj = new JSONObject(json);
+        JSONArray trailers = obj.getJSONArray("results");
+        for(int i=0;i<trailers.length();i++){
+            JSONObject trailer = trailers.getJSONObject(i);
+            String trailerUrl = "https://www.youtube.com/watch?v="+trailer.getString("key");
+            list.add(trailerUrl);
+        }
+        return list;
+    }
+
+
+    /*
+    * this method creates a list of author and its review pair
+    * */
+    public ArrayList<String[]> buildReviewList() throws JSONException{
+
+        ArrayList<String[]> list = new ArrayList<>();
+
+        JSONObject obj = new JSONObject(json);
+        JSONArray reviews = obj.getJSONArray("results");
+        for(int i=0;i<reviews.length();i++){
+            JSONObject review = reviews.getJSONObject(i);
+            String author = review.getString("author");
+            String verdict = review.getString("content");
+
+            list.add(new String[]{author,verdict});
+
+        }
+        return list;
+    }
 
 }

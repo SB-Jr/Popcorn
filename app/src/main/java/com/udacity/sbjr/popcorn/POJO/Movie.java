@@ -14,6 +14,7 @@ public class Movie implements Parcelable {
     String posterPath;
     String backdropPath;
     String rating;
+    String id;
 
     public Movie(){    }
 
@@ -24,6 +25,7 @@ public class Movie implements Parcelable {
         this.posterPath = parcel.readString();
         this.backdropPath = parcel.readString();
         this.rating = parcel.readString();
+        this.id = parcel.readString();
     }
 
 
@@ -41,6 +43,7 @@ public class Movie implements Parcelable {
         dest.writeString(posterPath);
         dest.writeString(backdropPath);
         dest.writeString(rating);
+        dest.writeString(id);
     }
 
 
@@ -62,9 +65,7 @@ public class Movie implements Parcelable {
     };
 
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() {return title;}
 
     public void setTitle(String title) {
         this.title = title;
@@ -109,4 +110,8 @@ public class Movie implements Parcelable {
     public void setRating(String rating) {
         this.rating = rating;
     }
+
+    public String getId() {return id;}
+
+    public void setId(String id) {this.id = id;}
 }

@@ -8,4 +8,6 @@ public class Constants {
     static public final String MOVIE_PARCELABLE="MOVIE_PARCELABLE";
     static public final String MOVIE_BUNDLE_PARCELABLE="MOVIE_BUNDLE_PARCELABLE";
 
+    static public final String mApiKey ="---";
+
 }

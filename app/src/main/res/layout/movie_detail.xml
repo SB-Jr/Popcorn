@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:nestedScrollingEnabled="true">
 <LinearLayout
     android:id="@+id/movie_background"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -54,5 +55,20 @@
 
     </LinearLayout>
 
+    <View style="@style/Divider" />
+
+    <ListView
+        android:id="@+id/movie_trailer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
+    <View style="@style/Divider" />
+
+    <ListView
+        android:id="@+id/movie_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
 </LinearLayout>
 </ScrollView>

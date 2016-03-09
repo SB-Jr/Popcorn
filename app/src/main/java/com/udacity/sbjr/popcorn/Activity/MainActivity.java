@@ -6,10 +6,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,15 +37,19 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    final private String apiKey="----";
+    private static final String sOrerTypeKey = "OrderTypeKey";
+    private static final String sMoveListKey = "MovieListKey";
+
+
+
 
     GridView movieGrid = null;
-    String movieJsonData=null;
-    String orderType="popularity.desc";
+    String mMovieJsonData =null;
+    String mOrderType ="popularity.desc";
     List<Movie> movieList = null;
     MovieAdapter movieAdapter;
 
-    boolean loaded = false;
+    boolean mLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         movieList = new ArrayList<>();
+
+        if(savedInstanceState!=null){
+            mLoaded = true;
+            movieList = savedInstanceState.getParcelableArrayList(sMoveListKey);
+            mOrderType = savedInstanceState.getString(sOrerTypeKey);
+        }
 
         movieGrid = (GridView) findViewById(R.id.movie_grid);
         movieGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,19 +80,24 @@ public class MainActivity extends AppCompatActivity {
         movieAdapter.setNotifyOnChange(true);
         movieGrid.setAdapter(movieAdapter);
 
-        if(loaded==false) {
-            new MovieLoader().execute(orderType);
+        if(mLoaded ==false) {
+            new MovieLoader().execute(mOrderType);
         }
-        loaded = true;
+        mLoaded = true;
 
     }
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(sOrerTypeKey, mOrderType);
+        outState.putParcelableArrayList(sMoveListKey, new ArrayList<Movie>(movieList));
+    }
 
     @Override
     protected void onStop() {
         super.onStop();
-        loaded = false;
+        mLoaded = false;
     }
 
     @Override
@@ -105,22 +119,25 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.sort_order) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Select a Sort Order");
-            String options[] = {"Popularity","Highest-Rated"};
+            builder.setTitle("Select an Option");
+            String options[] = {"Sort By Popularity","Sort By Highest-Rated","My Favourites"};
             builder.setItems(options, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    String newOrderType;
+                    String newOrderType = null;
                     if(which==0){
                         newOrderType="popularity.desc";
                     }
-                    else{
+                    else if(which==1){
                         newOrderType="vote_count.desc";
                     }
-                    if(newOrderType.equals(orderType)==false) {
-                        orderType = new String(newOrderType);
+                    else if(which==2){
+
+                    }
+                    if(which<=1&&newOrderType.equals(mOrderType)==false) {
+                        mOrderType = new String(newOrderType);
                         movieList.clear();
-                        new MovieLoader().execute(orderType);
+                        new MovieLoader().execute(mOrderType);
                     }
                 }
             });
@@ -148,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(String... params) {
 
             try {
-                movieJsonData = getMovieJson(params[0]);
+                mMovieJsonData = getMovieJson(params[0]);
             }
             catch (MalformedURLException e){
                 Toast.makeText(getApplicationContext(),"URL Error Occured",Toast.LENGTH_LONG).show();
@@ -172,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             try {
-                List<Movie> newMovieList =new MovieListBuilder(movieJsonData).buildList();
+                List<Movie> newMovieList =new MovieListBuilder(mMovieJsonData).buildList();
                 for(Movie m:newMovieList){
                     boolean contains = false;
                     for(Movie m2:movieList){
@@ -207,9 +224,10 @@ public class MainActivity extends AppCompatActivity {
     public String getMovieJson(String order) throws MalformedURLException, IOException{
         String json = "";
 
-        URL url = new URL("http://api.themoviedb.org/3/discover/movie?api_key="+apiKey+"&sort_by="+order);
+        URL url = new URL("http://api.themoviedb.org/3/discover/movie?api_key="+ Constants.mApiKey +"&sort_by="+order);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestMethod("GET");
+        urlConnection.setDoInput(true);
         urlConnection.connect();
         InputStream inputStream = urlConnection.getInputStream();
 
@@ -227,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
         if(json.length()==0){
             return null;
         }
-
         return json;
     }
 }
