@@ -50,7 +50,8 @@ public class MovieListBuilder {
             movieObj.setPosterPath(movieJsonObj.getString(moviePosterPath));
             movieObj.setRating(movieJsonObj.getString(movieVote));
             movieObj.setReleaseDate(movieJsonObj.getString(movieReleaseDate));
-            movieObj.setId(movieJsonObj.getString("id"));
+            movieObj.setId(movieJsonObj.getString(movieId));
+            movieObj.setPoster(null);
 
             list.add(movieObj);
         }

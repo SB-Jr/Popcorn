@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/movie_detail_favourite"
+        app:showAsAction="always"
+        android:title="@string/movie_favourite"
+        android:icon="@drawable/not_favourite_star" />
+
+    <item
+        android:id="@+id/movie_detail_share"
+        app:showAsAction="always"
+        android:title="@string/movie_share"
+        android:icon="@drawable/share_movie" />
+</menu>

@@ -1,20 +1,26 @@
 package com.udacity.sbjr.popcorn.POJO;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by sbjr on 2/3/16.
  */
 public class Movie implements Parcelable {
 
-    String title;
-    String releaseDate;
-    String synopsis;
-    String posterPath;
-    String backdropPath;
-    String rating;
-    String id;
+    String title = null;
+    String releaseDate = null;
+    String synopsis = null;
+    String posterPath = null;
+    String backdropPath = null;
+    String rating = null;
+    String id = null;
+    Bitmap poster = null;
+    byte[] posterBlob = new byte[0];
 
     public Movie(){    }
 
@@ -26,6 +32,9 @@ public class Movie implements Parcelable {
         this.backdropPath = parcel.readString();
         this.rating = parcel.readString();
         this.id = parcel.readString();
+        parcel.readByteArray(posterBlob);
+        if(posterBlob!=null)
+            poster = BitmapFactory.decodeByteArray(posterBlob, 0, posterBlob.length);
     }
 
 
@@ -44,6 +53,7 @@ public class Movie implements Parcelable {
         dest.writeString(backdropPath);
         dest.writeString(rating);
         dest.writeString(id);
+        dest.writeByteArray(posterBlob);
     }
 
 
@@ -114,4 +124,16 @@ public class Movie implements Parcelable {
     public String getId() {return id;}
 
     public void setId(String id) {this.id = id;}
+
+    public Bitmap getPoster() {
+        return poster;
+    }
+
+    public void setPoster(Bitmap poster) {
+        this.poster = poster;
+        ByteArrayOutputStream byteOS = new ByteArrayOutputStream();
+        if(poster !=null)
+            poster.compress(Bitmap.CompressFormat.PNG, 100, byteOS);
+        posterBlob = byteOS.toByteArray();
+    }
 }

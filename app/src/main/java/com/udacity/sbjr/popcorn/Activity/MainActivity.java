@@ -40,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String sOrerTypeKey = "OrderTypeKey";
     private static final String sMoveListKey = "MovieListKey";
 
-
-
+    public static final String sActivityName = "MainActivity";
 
     GridView movieGrid = null;
     String mMovieJsonData =null;
@@ -72,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getBaseContext(),MovieDetail.class);
                 intent.putExtra(Constants.MOVIE_PARCELABLE,movieList.get(position));
+                intent.putExtra(Constants.ActivityName,sActivityName);
                 startActivity(intent);
             }
         });
@@ -132,7 +132,8 @@ public class MainActivity extends AppCompatActivity {
                         newOrderType="vote_count.desc";
                     }
                     else if(which==2){
-
+                        Intent intent = new Intent(getApplicationContext(),FavouriteMovies.class);
+                        startActivity(intent);
                     }
                     if(which<=1&&newOrderType.equals(mOrderType)==false) {
                         mOrderType = new String(newOrderType);
