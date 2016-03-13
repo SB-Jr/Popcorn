@@ -20,7 +20,6 @@ public class Movie implements Parcelable {
     String rating = null;
     String id = null;
     Bitmap poster = null;
-    byte[] posterBlob = new byte[0];
 
     public Movie(){    }
 
@@ -32,9 +31,7 @@ public class Movie implements Parcelable {
         this.backdropPath = parcel.readString();
         this.rating = parcel.readString();
         this.id = parcel.readString();
-        parcel.readByteArray(posterBlob);
-        if(posterBlob!=null)
-            poster = BitmapFactory.decodeByteArray(posterBlob, 0, posterBlob.length);
+        poster = Bitmap.CREATOR.createFromParcel(parcel);
     }
 
 
@@ -53,7 +50,7 @@ public class Movie implements Parcelable {
         dest.writeString(backdropPath);
         dest.writeString(rating);
         dest.writeString(id);
-        dest.writeByteArray(posterBlob);
+        poster.writeToParcel(dest,flags);
     }
 
 
@@ -131,9 +128,5 @@ public class Movie implements Parcelable {
 
     public void setPoster(Bitmap poster) {
         this.poster = poster;
-        ByteArrayOutputStream byteOS = new ByteArrayOutputStream();
-        if(poster !=null)
-            poster.compress(Bitmap.CompressFormat.PNG, 100, byteOS);
-        posterBlob = byteOS.toByteArray();
     }
 }

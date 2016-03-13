@@ -1,5 +1,6 @@
 package com.udacity.sbjr.popcorn.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -45,25 +46,38 @@ public class FavouriteMovieDBHelper extends SQLiteOpenHelper{
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {  }
 
+    public long addMovieCursor(ContentValues contentValues){
+        long id = getWritableDatabase().insert(FavouriteMovieContract.TABLE_NAME,null,contentValues);
+        return id;
     }
 
     public int addMovie(String id,String title,String yor,String rating,String synopsis,Bitmap poster){
         SQLiteDatabase db = getWritableDatabase();
         ByteArrayOutputStream byteOS = new ByteArrayOutputStream();
-        poster.compress(Bitmap.CompressFormat.PNG,100,byteOS);
+        poster.compress(Bitmap.CompressFormat.PNG,0,byteOS);
         byte[] blob = byteOS.toByteArray();
-        String query = "INSERT INTO "+FavouriteMovieContract.TABLE_NAME+" VALUES("+
-                "'"+id+"','"+title+"','"+yor+"','"+rating+"','"+synopsis+"','"+blob+"');";
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FavouriteMovieContract.MOVIE_ID,id);
+        contentValues.put(FavouriteMovieContract.MOVIE_NAME,title);
+        contentValues.put(FavouriteMovieContract.YEAR_OF_RELEASE,yor);
+        contentValues.put(FavouriteMovieContract.RATING,rating);
+        contentValues.put(FavouriteMovieContract.SYNOPSIS,synopsis);
+        contentValues.put(FavouriteMovieContract.POSTER,blob);
+
         try {
-            db.execSQL(query);
-            return 1;
+            db.insert(FavouriteMovieContract.TABLE_NAME,null,contentValues);
+            db.close();
+            Toast.makeText(context,title+" added to favourite list",Toast.LENGTH_LONG).show();
+
         }
         catch (Exception e){
             Toast.makeText(context,"Either movie is already in the Fouvirite List or else Some Error occured...",Toast.LENGTH_LONG).show();
+            db.close();
             return -1;
         }
+        return 1;
     }
 
     public Cursor getFavouriteMovieCursor(){
@@ -85,8 +99,8 @@ public class FavouriteMovieDBHelper extends SQLiteOpenHelper{
                 Movie m = new Movie();
                 String id = cursor.getString(0);
                 String title = cursor.getString(1);
-                String yor = cursor.getString(2);
-                String rating = cursor.getString(3);
+                String rating = cursor.getString(2);
+                String yor = cursor.getString(3);
                 String synopsis = cursor.getString(4);
                 byte[] posterByte = cursor.getBlob(5);
                 Bitmap poster = BitmapFactory.decodeByteArray(posterByte,0,posterByte.length);

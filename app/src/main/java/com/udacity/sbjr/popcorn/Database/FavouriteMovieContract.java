@@ -7,13 +7,7 @@ import android.net.Uri;
  */
 public class FavouriteMovieContract {
 
-
     public final static String TABLE_NAME="favourite_movie";
-
-    public final static String AUTHORITY="COM.UDACITY.SBJR.POPCORN";
-    public final static Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
-    public final static Uri CONTENT_URI = BASE_URI.buildUpon().appendPath(TABLE_NAME).build();
-
 
     public final static String MOVIE_ID="movie_id";
     public final static String MOVIE_NAME="movie_name";
@@ -21,6 +15,4 @@ public class FavouriteMovieContract {
     public final static String RATING="rating";
     public final static String SYNOPSIS="synopsis";
     public final static String POSTER="poster";
-
-
 }

@@ -2,6 +2,7 @@ package com.udacity.sbjr.popcorn.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
@@ -48,7 +49,6 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
         ImageView poster = (ImageView) v.findViewById(R.id.movie_image);
         Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w342"+movie.getPosterPath()).into(poster);
-
         return v;
     }
 }

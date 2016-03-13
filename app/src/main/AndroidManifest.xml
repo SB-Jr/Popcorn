@@ -11,9 +11,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <provider
-            android:authorities=".Database.FavouriteMovieContentProvider"
-            android:name="com.udacity.sbjr.popcorn.Database.FavouriteMovieContentProvider" />
 
         <activity
             android:name=".Activity.MainActivity"
@@ -25,8 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MovieDetail" />
-        <activity android:name=".Activity.FavouriteMovies"></activity>
+        <provider
+            android:authorities="com.udacity.sbjr.popcorn.Database.FavouriteMovieContentProvider"
+            android:name=".Database.FavouriteMovieContentProvider"
+            android:enabled="true"
+            android:exported="false"/>
+        <activity android:name=".Activity.MovieDetailActivity"></activity>
     </application>
 
 </manifest>

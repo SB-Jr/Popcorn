@@ -1,9 +1,19 @@
 package com.udacity.sbjr.popcorn.POJO;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+import com.udacity.sbjr.popcorn.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +42,7 @@ public class MovieListBuilder {
     /*
     * this method is used to create a list of movie objects by parsing the json and pass it to the calling function
     * */
-    public ArrayList<Movie> buildList() throws JSONException{
+    public ArrayList<Movie> buildList(Context context) throws JSONException{
         ArrayList<Movie> list = new ArrayList<>();
 
         if(json==null)

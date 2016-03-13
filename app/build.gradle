@@ -19,9 +19,18 @@ android {
     }
 }
 
-repositories {
-    mavenCentral()
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
 }
+
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -30,4 +39,6 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:palette-v7:23.1.1'
+    compile 'com.github.hotchemi:permissionsdispatcher:1.2.1@aar'
+    apt 'com.github.hotchemi:permissionsdispatcher-processor:1.2.1'
 }

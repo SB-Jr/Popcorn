@@ -12,4 +12,6 @@ public class Constants {
 
     static public final String ActivityName="ActivityName";
 
+    public static final String sNUMPANES="NO_OF_PANES";
+
 }
