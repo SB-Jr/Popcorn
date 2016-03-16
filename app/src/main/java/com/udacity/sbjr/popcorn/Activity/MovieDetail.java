@@ -248,10 +248,10 @@ public class MovieDetail extends android.support.v4.app.Fragment {
             try{
                 trailerJson = getJson(trailerUrl);
             }catch (MalformedURLException e){
-                Toast.makeText(getActivity().getApplicationContext(), "URL Error Occured..Cant fetch Trailer", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getApplicationContext(), "URL Error Occured..Cant fetch Trailer", Toast.LENGTH_LONG).show();
             }
             catch (IOException e){
-                Toast.makeText(getActivity().getApplicationContext(), "Error Occured..Cant fetch Trailer", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getApplicationContext(), "Error Occured..Cant fetch Trailer", Toast.LENGTH_LONG).show();
             }
             return null;
         }

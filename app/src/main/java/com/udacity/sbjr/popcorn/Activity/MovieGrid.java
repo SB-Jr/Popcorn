@@ -205,10 +205,10 @@ public class MovieGrid extends Fragment {
                 mMovieJsonData = getMovieJson(params[0]);
             }
             catch (MalformedURLException e){
-                Toast.makeText(getActivity().getApplicationContext(),"URL Error Occured",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getApplicationContext(),"URL Error Occured",Toast.LENGTH_LONG).show();
             }
             catch (IOException e){
-                Toast.makeText(getActivity().getApplicationContext(),"Error Occured",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getApplicationContext(),"Error Occured",Toast.LENGTH_LONG).show();
             }
 
 
